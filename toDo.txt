@@ -1,0 +1,38 @@
+Code
+Demonstrate data transfers between multiple nodes.
+Identify those messages and exchanges that you support.
+Implement network socket connection setup and interactions. 
+    Use library or low level implementation. 15% up for grabs for low level.
+Implement adequate Discovery processes appropriate to your architecture and topologies 
+Security or SW Eng facets
+Testing
+Any additional functionalities - 20%
+
+
+
+Write out instructions on how to setup, compile and run the test cases in the README.
+
+Report - 10%
+    Use Case
+    Picture / Diagram / Logical Diagram
+    High Level Messaging / Functionality / Functional description / Purpose
+    Algorithm / Pseudo Code / Structure / Logical thinking
+    Networking / Comms model: e.g. Client Server or Peer-to-Peer - > Any lower layers (Application and/or Network)
+    Other considerations e.g. Security, SW Eng, etc.
+    Implementation details
+    Highlights/Unique Selling Points  of your system/implementation.
+    Changes, advances and/or improvements from Project 0, and why
+
+Video
+    SHORT (5 mins max) elevator pitch style video - separate short video submission task. 
+    Each student to contribute equally and in-person on camera.
+
+    One slide per each of these:
+        Discovery
+        Support request, response, relevant status responses, and content types
+        Demonstrate data transfer between multiple nodes
+        Explain code/implementation
+        Explain how any libraries or third party code is used
+        Low level elements - bonus
+        Additional Functionality
+
