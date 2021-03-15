@@ -3,11 +3,12 @@ Resources
 Set-up:
 OS -> Linux
 IDE -> CodeBlocks -> https://www.linuxbabe.com/ubuntu/install-code-blocks-ubuntu-16-04-17-04
-Compiler -> gnu
+Compiler -> gnu gcc compiler
 
 
 Code snippets:
 Open connection, transfer data & close connection -> https://www.geeksforgeeks.org/tcp-server-client-implementation-in-c/
+Handling multiple clients -> https://www.geeksforgeeks.org/socket-programming-in-cc-handling-multiple-clients-on-server-without-multi-threading/
 
 
 Information about libraries:
