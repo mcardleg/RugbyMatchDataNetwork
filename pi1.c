@@ -10,6 +10,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <sys/time.h> //FD_SET, FD_ISSET, FD_ZERO macros
+#include<time.h>
 
 #define TRUE   1
 #define FALSE  0
@@ -23,6 +24,14 @@ struct sockaddr_in address;
 char buffer[1025];  //data buffer of 1K
 char player[10];
 fd_set readfds;     //set of socket descriptors
+
+void delay(int seconds)
+{
+    int milli_seconds = 1000 * seconds;
+    clock_t start_time = clock();
+
+    while (clock() < start_time + milli_seconds);
+}
 
 int setup(){
     opt = TRUE;
@@ -171,7 +180,7 @@ int comms(char *message){
 
     //If something happened on the master socket, then its an incoming connection
     if (FD_ISSET(master_socket, &readfds))
-    {	
+    {
         if ((new_socket = accept(master_socket,(struct sockaddr *)&address, (socklen_t*)&addrlen))<0)
         {
         	perror("accept");
@@ -211,6 +220,7 @@ int comms(char *message){
         }
         e = 0;          //reset
     }
+    delay(250);
     return 1;
 }
 

@@ -10,6 +10,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <sys/time.h> //FD_SET, FD_ISSET, FD_ZERO macros
+#include <time.h>
 
 #define TRUE   1
 #define FALSE  0
@@ -23,6 +24,14 @@ struct sockaddr_in address;
 char buffer[1025];  //data buffer of 1K
 char player[10];
 fd_set readfds;     //set of socket descriptors
+
+void delay(int seconds)
+{
+    int milli_seconds = 1000 * seconds;
+    clock_t start_time = clock();
+
+    while (clock() < start_time + milli_seconds);
+}
 
 int setup(){
     opt = TRUE;
@@ -116,7 +125,7 @@ int socket_in_out(int i){
         //Check if it's a message from a player
         else if(player_check[i] == 1)
         {
-            sprintf(player, "%d", i+7);		//DIFFERENT FOR EACH PI
+            sprintf(player, "%d", i+6);		//DIFFERENT FOR EACH PI
             player[1] = ':';
             player[2] = ' ';
             player[3] = '\0';
@@ -216,6 +225,7 @@ int comms(char *message){
         }
         e = 0;          //reset
     }
+    delay(250);
     return 1;
 }
 

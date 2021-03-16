@@ -10,13 +10,6 @@
 #define PORT 8081
 #define SA struct sockaddr
 
-void delay(int seconds)
-{
-    int milli_seconds = 1000 * seconds;
-    clock_t start_time = clock();
-
-    while (clock() < start_time + milli_seconds);
-}
 
 void player_tell(int sockfd)
 {
@@ -44,7 +37,6 @@ void func(int sockfd)
         bzero(buff, sizeof(buff));
         read(sockfd, buff, sizeof(buff));
         printf("From Server: %s\n", buff);
-        delay(33.33);                                         //delay 2 seconds
         if ((strncmp(buff, "exit", 4)) == 0) {                  //fix exit
             printf("Client Exit...\n");
             break;
