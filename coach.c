@@ -9,6 +9,20 @@
 #define PORT 8080
 #define SA struct sockaddr
 
+void coach_tell(int sockfd)
+{
+    char buff[MAX];
+    int n;
+    bzero(buff, sizeof(buff));
+    printf("Telling server this is a player.\n");
+    strcpy(buff, "coach\0");
+    write(sockfd, buff, sizeof(buff));
+    bzero(buff, sizeof(buff));
+    read(sockfd, buff, sizeof(buff));
+    printf("From Server : %s", buff);
+}
+
+
 void func(int sockfd)
 {
     char buff[MAX];
@@ -57,6 +71,9 @@ int main()
     }
     else
         printf("connected to the server..\n");
+
+    // tell server this is a player
+    coach_tell(sockfd);
 
     // function for chat
     func(sockfd);
