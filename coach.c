@@ -28,7 +28,7 @@ void coach_tell(int sockfd)
     write(sockfd, buff, sizeof(buff));
     bzero(buff, sizeof(buff));
     read(sockfd, buff, sizeof(buff));
-    printf("From Server : %s", buff);
+    printf("From Server: %s", buff);
 }
 
 
@@ -43,7 +43,7 @@ void func(int sockfd)           //send requests for data periodically
         write(sockfd, buff, sizeof(buff));
         bzero(buff, sizeof(buff));
         read(sockfd, buff, sizeof(buff));
-        printf("From Server : %s", buff);
+        printf("From Server: %s\n", buff);
         if ((strncmp(buff, "exit", 4)) == 0) {
             printf("Client Exit...\n");
             break;
