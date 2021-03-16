@@ -44,8 +44,8 @@ void func(int sockfd)
         bzero(buff, sizeof(buff));
         read(sockfd, buff, sizeof(buff));
         printf("From Server: %s\n", buff);
-        delay(500);                                           //delay 2 seconds
-        if ((strncmp(buff, "exit", 4)) == 0) {              //fix exit
+        delay(33.33);                                         //delay 2 seconds
+        if ((strncmp(buff, "exit", 4)) == 0) {                  //fix exit
             printf("Client Exit...\n");
             break;
         }

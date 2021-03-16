@@ -93,6 +93,12 @@ int socket_in_out(int i){
             close( sd );
             client_socket[i] = 0;
         }
+        //If incoming message says "exit", echo it back.
+        else if ((strncmp(buffer, "exit", 4)) == 0) {
+            printf("Client Exit...\n");
+            buffer[valread] = '\0';
+            send(sd , buffer , strlen(buffer) , 0 );
+        }
         //Check if the socket is a player
         else if(strcmp(buffer, "player") == 0)
         {
