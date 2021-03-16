@@ -5,9 +5,18 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <time.h>
 #define MAX 80
 #define PORT 8080
 #define SA struct sockaddr
+
+void delay(int seconds)
+{
+    int milli_seconds = 1000 * seconds;
+    clock_t start_time = clock();
+
+    while (clock() < start_time + milli_seconds);
+}
 
 void player_tell(int sockfd)
 {
@@ -35,7 +44,8 @@ void func(int sockfd)
         bzero(buff, sizeof(buff));
         read(sockfd, buff, sizeof(buff));
         printf("From Server: %s\n", buff);
-        if ((strncmp(buff, "exit", 4)) == 0) {
+        delay(500);                                           //delay 2 seconds
+        if ((strncmp(buff, "exit", 4)) == 0) {              //fix exit
             printf("Client Exit...\n");
             break;
         }
