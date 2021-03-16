@@ -1,0 +1,18 @@
+pi 1
+#define PORT 8080
+sprintf(player, "%d", i);
+
+
+pi 2
+#define PORT 8081
+sprintf(player, "%d", i+7);
+
+
+pi 3
+#define PORT 8082
+sprintf(player, "%d", i+14);
+
+
+pi 4
+#define PORT 8081
+sprintf(player, "%d", i+21);

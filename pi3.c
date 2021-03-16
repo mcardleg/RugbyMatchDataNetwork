@@ -17,17 +17,17 @@
 
 //globals
 int opt;
-int master_socket, addrlen, new_socket, client_socket[30], max_clients, player_check[30], activity, i, valread, sd, coach;
+int master_socket, addrlen, new_socket, client_socket[7], max_clients, clients, player_check[7], activity, i, valread, sd, coach;
 int max_sd;
 struct sockaddr_in address;
 char buffer[1025];  //data buffer of 1K
 char player[10];
 fd_set readfds;     //set of socket descriptors
 
-
 int setup(){
     opt = TRUE;
-    max_clients = 30;
+    max_clients = 7;
+    clients = 0;
 
     for (i = 0; i < max_clients; i++)
     {
@@ -54,7 +54,7 @@ int setup(){
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons( PORT );
 
-        //bind the socket to localhost port 8888
+    //bind the socket to localhost port 8888
     if (bind(master_socket, (struct sockaddr *)&address, sizeof(address))<0)
     {
         perror("bind failed");
@@ -116,7 +116,7 @@ int socket_in_out(int i){
         //Check if it's a message from a player
         else if(player_check[i] == 1)
         {
-            sprintf(player, "%d", i);
+            sprintf(player, "%d", i+14);		//DIFFERENT FOR EACH PI
             player[1] = ':';
             player[2] = ' ';
             player[3] = '\0';
@@ -171,11 +171,16 @@ int comms(char *message){
 
     //If something happened on the master socket, then its an incoming connection
     if (FD_ISSET(master_socket, &readfds))
-    {
-        if ((new_socket = accept(master_socket,(struct sockaddr *)&address, (socklen_t*)&addrlen))<0)
-        {
-            perror("accept");
-            exit(EXIT_FAILURE);
+    {	if (clients <= max_clients){
+        	if ((new_socket = accept(master_socket,(struct sockaddr *)&address, (socklen_t*)&addrlen))<0)
+        	{
+        	    perror("accept");
+        	    exit(EXIT_FAILURE);
+        	}
+        }
+        else{
+        	perror("accept");
+        	exit(EXIT_FAILURE);
         }
 
         //inform user of socket number - used in send and receive commands
