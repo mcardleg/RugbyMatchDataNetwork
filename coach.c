@@ -23,7 +23,7 @@ void coach_tell(int sockfd)
     char buff[MAX];
     int n;
     bzero(buff, sizeof(buff));
-    printf("Telling server this is a player.\n");
+    printf("Telling server this is a coach.\n");
     strcpy(buff, "coach\0");
     write(sockfd, buff, sizeof(buff));
     bzero(buff, sizeof(buff));
