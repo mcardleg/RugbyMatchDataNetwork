@@ -14,13 +14,6 @@ int max_clients, server_socket[4], i;
 int socket1, socket2, socket3, socket4, connfd;
 struct sockaddr_in serv1addr, serv2addr, serv3addr, serv4addr, cli;
 
-void delay(int seconds)
-{
-    int milli_seconds = 1000 * seconds;
-    clock_t start_time = clock();
-
-    while (clock() < start_time + milli_seconds);
-}
 
 void setup(){
     max_clients = 4;
@@ -154,13 +147,19 @@ void coach_tell(int sockfd)
 int func(int socket)           //send requests for data periodically
 {
     char buff[MAX];
-    bzero(buff, sizeof(buff));
-    read(socket, buff, sizeof(buff));
-    printf("From Server: %s\n", buff);
-    if ((strncmp(buff, "exit", 4)) == 0) {
-        return 1;
+    for(int x=0;x<2;x++){
+        bzero(buff, sizeof(buff));
+        read(socket, buff, sizeof(buff));
+        printf("From Pi : %s\n", buff);
+
+        bzero(buff, sizeof(buff));
+        read(socket, buff, sizeof(buff));
+        printf(" Player number: %s ", buff);
+
+        if ((strncmp(buff, "exit", 4)) == 0) {
+            return 1;
+        }
     }
-    delay(500);
     return 0;
 }
 
