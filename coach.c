@@ -5,9 +5,18 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <time.h>
 #define MAX 80
 #define PORT 8080
 #define SA struct sockaddr
+
+void delay(int seconds)
+{
+    int milli_seconds = 1000 * seconds;
+    clock_t start_time = clock();
+
+    while (clock() < start_time + milli_seconds);
+}
 
 void coach_tell(int sockfd)
 {
@@ -19,28 +28,27 @@ void coach_tell(int sockfd)
     write(sockfd, buff, sizeof(buff));
     bzero(buff, sizeof(buff));
     read(sockfd, buff, sizeof(buff));
-    printf("From Server : %s", buff);
+    printf("From Server: %s", buff);
 }
 
 
-void func(int sockfd)
+void func(int sockfd)           //send requests for data periodically
 {
     char buff[MAX];
     int n;
     for (;;) {
         bzero(buff, sizeof(buff));
-        printf("Enter the string : ");
-        n = 0;
-        while ((buff[n++] = getchar()) != '\n')
-            ;
+        printf("Requesting data.\n");
+        strcpy(buff, "request");
         write(sockfd, buff, sizeof(buff));
         bzero(buff, sizeof(buff));
         read(sockfd, buff, sizeof(buff));
-        printf("From Server : %s", buff);
+        printf("From Server: %s\n", buff);
         if ((strncmp(buff, "exit", 4)) == 0) {
             printf("Client Exit...\n");
             break;
         }
+        delay(500);
     }
 }
 

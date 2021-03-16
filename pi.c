@@ -15,14 +15,15 @@
 #define FALSE  0
 #define PORT 8080
 
-
 //globals
 int opt;
-int master_socket, addrlen, new_socket, client_socket[30], max_clients, player_check[30], activity, i, valread, sd, player, coach;
+int master_socket, addrlen, new_socket, client_socket[30], max_clients, player_check[30], activity, i, valread, sd, coach;
 int max_sd;
 struct sockaddr_in address;
 char buffer[1025];  //data buffer of 1K
+char player[10];
 fd_set readfds;     //set of socket descriptors
+
 
 int setup(){
     opt = TRUE;
@@ -109,6 +110,11 @@ int socket_in_out(int i){
         //Check if it's a message from a player
         else if(player_check[i] == 1)
         {
+            sprintf(player, "%d", i);
+            player[1] = ':';
+            player[2] = ' ';
+            player[3] = '\0';
+            send(coach, player, strlen(player), 0 );
             buffer[valread] = '\0';                 //null terminate
             send(coach, buffer, strlen(buffer), 0 );
             strcpy(buffer, "forwarded\0");
@@ -124,7 +130,7 @@ int socket_in_out(int i){
     return 1;
 }
 
-int comms(){
+int comms(char *message){
     int e;          //for error handling
     //clear the socket set
     FD_ZERO(&readfds);
@@ -216,7 +222,7 @@ int main(int argc , char *argv[])
 
     while(TRUE)
     {
-        e = comms();
+        e = comms(message);
         if (!e){
         //DO SOME ERROR HANDLING HERE
         }
