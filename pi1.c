@@ -147,24 +147,9 @@ int socket_in_out(int i){
             buffer[valread] = '\0';
             send(sd , buffer , strlen(buffer) , 0 );
             q--;
-            //if(q=0){
+            if(q=0){
             send(coach, buffer, strlen(buffer), 0);
-
-            for (int j = 0; j < 65; j++) {
-                for (int k = 0; k < 6; k++) {
-                    printf("%c ", hb_array[j][k]);
-                    }
-                printf("\n");
             }
-
-            for (int j = 0; j < 65; j++) {
-                for (int k = 0; k < 6; k++) {
-                    printf("%c ", impact_array[j][k]);
-                    }
-                printf("\n");
-            }
-
-            //}
         }
         //Check if the socket is a player
         else if(strcmp(buffer, "player") == 0)
@@ -202,11 +187,11 @@ int socket_in_out(int i){
             str1[0]=player[4];
             str1[1]=player[5];
             str1[2]=player[6];
-            str2[0]=player[7];
+            str2[0]=player[8];
             if(player[8]!='\0'){
-            str2[1]=player[8];
+            str2[1]=player[9];
             }
-            else{player[8]=' ';}
+            else{player[9]=' ';}
             player[y++] = '\0';
 
             int a = atoi(str1);
