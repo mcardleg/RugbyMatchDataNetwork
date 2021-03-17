@@ -18,7 +18,7 @@
 #define PORT 8081	//THIS IS THE ONLY DIFFERENCE BETWEEN EACH PI FILE
 
 //globals
-int count =0;
+int count;
 int count0, count1, count2, count3, count4, count5;
 int hb_array[1000][5];
 int impact_array[1000][5];
@@ -29,7 +29,7 @@ struct sockaddr_in address;
 char buffer[1025];  //data buffer of 1K
 char player[30];
 fd_set readfds;     //set of socket descriptors
-int x = 0;
+int q;
 
 void delay(int seconds)
 {
@@ -40,28 +40,28 @@ void delay(int seconds)
 }
 void storage(int i, int hr, int impact){
     switch(i-1) {
-        case 0: hb_array[count0][i];
-            impact_array[count0][i];
+        case 0: hb_array[count0][i]=hr;
+            impact_array[count0][i]=impact;
             count0++;
             break;
-        case 1: hb_array[count1][i];
-            impact_array[count1][i];
+        case 1: hb_array[count1][i]=hr;
+            impact_array[count1][i]=impact;
             count1++;
             break;
-        case 2: hb_array[count2][i];
-            impact_array[count2][i];
+        case 2: hb_array[count2][i]=hr;
+            impact_array[count2][i]=impact;
             count2++;
             break;
-        case 3: hb_array[count3][i];
-            impact_array[count3][i];
+        case 3: hb_array[count3][i]=hr;
+            impact_array[count3][i]=impact;
             count3++;
             break;
-        case 4: hb_array[count4][i];
-            impact_array[count4][i];
+        case 4: hb_array[count4][i]=hr;
+            impact_array[count4][i]=impact;
             count4++;
             break;
-        case 5: hb_array[count5][i];
-            impact_array[count5][i];
+        case 5: hb_array[count5][i]=hr;
+            impact_array[count5][i]=impact;
             count5++;
             break;
     }
@@ -72,6 +72,8 @@ int setup(){
     max_clients = 7;
     clients = 0;
     count0 = 0, count1 = 0, count2 = 0, count3 = 0, count4 = 0, count5 = 0;
+    q = 0;
+    count = 0;
 
     for (i = 0; i < max_clients; i++)
     {
@@ -142,9 +144,24 @@ int socket_in_out(int i){
             printf("Client Exit...\n");
             buffer[valread] = '\0';
             send(sd , buffer , strlen(buffer) , 0 );
-            x--;
-            if(x=0){
+            q--;
+            if(q=0){
             send(coach, buffer, strlen(buffer), 0);
+
+            for (int j = 0; j < 65; j++) {
+                for (int k = 0; k < 6; k++) {
+                    printf("%c ", hb_array[j][k]);
+                    }
+                printf("\n");
+            }
+
+            for (int j = 0; j < 65; j++) {
+                for (int k = 0; k < 6; k++) {
+                    printf("%c ", impact_array[j][k]);
+                    }
+                printf("\n");
+            }
+
             }
         }
         //Check if the socket is a player
@@ -152,7 +169,7 @@ int socket_in_out(int i){
         {
             strcpy(buffer, "ack player\0");
             player_check[i] = 1;                //track player sockets
-            x++;
+            q++;
             send(sd, buffer, strlen(buffer), 0 );
         }
         //Check if the socket is a coach
