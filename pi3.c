@@ -18,8 +18,8 @@
 
 //globals
 int count =0;
-int hb_array[][6];
-int impact_array[][6];
+//int hb_array[1000][6];
+//int impact_array[1000][6];
 int opt;
 int master_socket, addrlen, new_socket, client_socket[7], max_clients, clients, player_check[7], activity, i, valread, sd, coach;
 int max_sd;
@@ -150,11 +150,15 @@ int socket_in_out(int i){
         //Check if it's a message from a player
         else if(player_check[i] == 1)
         {
-            char str[3];
-
+           char str1[15];
+            char str2[15];
+            char str3[15];
+            char str4[15];
+            int d;
             int x =0;
             int y =4;
             sprintf(player, "%d", i+12);		//DIFFERENT FOR EACH PI
+            //if(player[1]==1)player[1]=' ';
             player[2] = ':';
             player[3] = ' ';
             buffer[valread] = '\0';
@@ -163,29 +167,29 @@ int socket_in_out(int i){
                 x++;
                 y++;
             }
-
-            str[0]=player[4];
-            str[1]=player[5];
-            str[2]=player[7];
+            str1[0]=player[4];
+            str2[0]=player[5];
+            str3[0]=player[7];
             if(player[8]!='\0'){
-            str[3]=player[8];
+            str4[0]=player[8];
+            d = atoi(str4);
             }
             else{player[8]=' ';}
             player[y++] = '\0';
 
-            int a = str[0];
-            int b = str[1];
+            int a = atoi(str1);
+            int b = atoi(str2);
             int e = concat(a,b);
 
             if(e>=85){
             count++;
             //store array
-            hb_array[e][i];
+            //hb_array[e][i];
 
             }
             else{
             count=0;
-            hb_array[e][i];
+            //hb_array[e][i];
             //store array
             }
 
@@ -193,21 +197,18 @@ int socket_in_out(int i){
             send(coach, player, strlen(player), 0 );
             }
 
-            int c = str[0];
-            int d = str[1];
+            int c = atoi(str3);
             int f = concat(c,d);
 
             if(f>=12){
             //alert
             send(coach, player, strlen(player), 0 );
-            impact_array[f][i];
+            //impact_array[f][i];
             }
             else{
             //store array
-            impact_array[f][i];
+            //impact_array[f][i];
             }
-            //buffer[valread] = '\0';                 //null terminate
-            //send(coach, buffer, strlen(buffer), 0 );
             strcpy(buffer, "forwarded\0");
             send(sd, buffer, strlen(buffer), 0 );
         }
