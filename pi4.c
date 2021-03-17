@@ -168,10 +168,10 @@ int socket_in_out(int i){
                 y++;
             }
             str1[0]=player[4];
-            str2[0]=player[5];
-            str3[0]=player[7];
+            str1[1]=player[5];
+            str2[0]=player[7];
             if(player[8]!='\0'){
-            str4[0]=player[8];
+            str2[1]=player[8];
             d = atoi(str4);
             }
             else{player[8]=' ';}
@@ -179,9 +179,9 @@ int socket_in_out(int i){
 
             int a = atoi(str1);
             int b = atoi(str2);
-            int e = concat(a,b);
+            //int e = concat(a,b);
 
-            if(e>=85){
+            if(a>=85){
             count++;
             //store array
             //hb_array[e][i];
@@ -197,10 +197,10 @@ int socket_in_out(int i){
             send(coach, player, strlen(player), 0 );
             }
 
-            int c = atoi(str3);
-            int f = concat(c,d);
+           // int c = atoi(str3);
+            //int f = concat(c,d);
 
-            if(f>=12){
+            if(b>=12){
             //alert
             send(coach, player, strlen(player), 0 );
             //impact_array[f][i];
