@@ -19,7 +19,13 @@
 <<<<<<< Updated upstream
 =======
 int count =0;
+<<<<<<< Updated upstream
 int p1count, p2count, p3count, p4count, p5count, p6count;
+int hb_array[1000][6];
+int impact_array[1000][6];
+>>>>>>> Stashed changes
+=======
+int count0, count1, count2, count3, count4, count5;
 int hb_array[1000][6];
 int impact_array[1000][6];
 >>>>>>> Stashed changes
@@ -31,12 +37,77 @@ char buffer[1025];  //data buffer of 1K
 char player[10];
 fd_set readfds;     //set of socket descriptors
 
+<<<<<<< Updated upstream
+=======
+void delay(int seconds)
+{
+    int milli_seconds = 1000 * seconds;
+    clock_t start_time = clock();
+
+    while (clock() < start_time + milli_seconds);
+}
+
+int concat(int a, int b)
+{
+
+    char s1[20];
+    char s2[20];
+
+    // Convert both the integers to string
+    sprintf(s1, "%d", a);
+    sprintf(s2, "%d", b);
+
+    // Concatenate both strings
+    strcat(s1, s2);
+
+    // Convert the concatenated string
+    // to integer
+    int c = atoi(s1);
+
+    // return the formed integer
+    return c;
+}
+
+void storage(int i, int hr, int impact){
+    switch(i) {
+        case 0: hb_array[count0][i];
+            impact_array[count0][i];
+            count0++;
+            break;
+        case 1: hb_array[count1][i];
+            impact_array[count1][i];
+            count1++;
+            break;
+        case 2: hb_array[count2][i];
+            impact_array[count2][i];
+            count2++;
+            break;
+        case 3: hb_array[count3][i];
+            impact_array[count3][i];
+            count3++;
+            break;
+        case 4: hb_array[count4][i];
+            impact_array[count4][i];
+            count4++;
+            break;
+        case 5: hb_array[count5][i];
+            impact_array[count5][i];
+            count5++;
+            break;
+    }
+}
+
+>>>>>>> Stashed changes
 int setup(){
     opt = TRUE;
     max_clients = 7;
     clients = 0;
+<<<<<<< Updated upstream
     p1count = 0, p2count = 0, p3count = 0, p4count = 0, p5count = 0, p6count = 0;
 
+=======
+    count0 = 0, count1 = 0, count2 = 0, count3 = 0, count4 = 0, count5 = 0;
+>>>>>>> Stashed changes
 
     for (i = 0; i < max_clients; i++)
     {
@@ -164,6 +235,7 @@ int socket_in_out(int i){
             send(coach, buffer, strlen(buffer), 0 );
             strcpy(buffer, "forwarded\0");
             send(sd, buffer, strlen(buffer), 0 );
+            storage(i, a, b);
         }
         //If it's not a player, its a coach requesting data.
         else
