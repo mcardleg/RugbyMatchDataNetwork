@@ -16,6 +16,13 @@
 #define PORT 8082	//THIS IS THE ONLY DIFFERENCE BETWEEN EACH PI FILE
 
 //globals
+<<<<<<< Updated upstream
+=======
+int count =0;
+int p1count, p2count, p3count, p4count, p5count, p6count;
+int hb_array[1000][6];
+int impact_array[1000][6];
+>>>>>>> Stashed changes
 int opt;
 int master_socket, addrlen, new_socket, client_socket[7], max_clients, clients, player_check[7], activity, i, valread, sd, coach;
 int max_sd;
@@ -28,6 +35,8 @@ int setup(){
     opt = TRUE;
     max_clients = 7;
     clients = 0;
+    p1count = 0, p2count = 0, p3count = 0, p4count = 0, p5count = 0, p6count = 0;
+
 
     for (i = 0; i < max_clients; i++)
     {
@@ -74,6 +83,36 @@ int setup(){
     puts("Waiting for connections ...");
 
     return 1;
+}
+
+int storage(int i, int a, int b){
+
+    switch(i){
+        case 0: hb_array[p1count][i] = a;
+            impact_array[p1count][i] = b;
+            p1count++;
+            break;
+        case 1: hb_array[p2count][i] = a;
+            impact_array[p2count][i] = b;
+            p2count++;
+            break;
+        case 2: hb_array[p3count][i] = a;
+            impact_array[p3count][i] = b;
+            p3count++;
+            break;
+        case 3: hb_array[p4count][i] = a;
+            impact_array[p4count][i] = b;
+            p4count++;
+            break;
+        case 4: hb_array[p5count][i] = a;
+            impact_array[p5count][i] = b;
+            p5count++;
+            break;
+        case 5: hb_array[p6count][i] = a;
+            impact_array[p6count][i] = b;
+            p6count++;
+            break;
+    }
 }
 
 int socket_in_out(int i){
