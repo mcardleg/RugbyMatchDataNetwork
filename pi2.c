@@ -38,26 +38,6 @@ void delay(int seconds)
     while (clock() < start_time + milli_seconds);
 }
 
-int concat(int a, int b)
-{
-
-    char s1[20];
-    char s2[20];
-
-    // Convert both the integers to string
-    sprintf(s1, "%d", a);
-    sprintf(s2, "%d", b);
-
-    // Concatenate both strings
-    strcat(s1, s2);
-
-    // Convert the concatenated string
-    // to integer
-    int c = atoi(s1);
-
-    // return the formed integer
-    return c;
-}
 
 int setup(){
     opt = TRUE;
@@ -158,14 +138,10 @@ int socket_in_out(int i){
         {
             char str1[15];
             char str2[15];
-            char str3[15];
-            char str4[15];
-            int d;
             int x =0;
             int y =4;
             sprintf(player, "%d", i+6);		//DIFFERENT FOR EACH PI
             player[1]=' ';
-            //if(player[1]==1)player[1]=' ';
             player[2] = ':';
             player[3] = ' ';
             buffer[valread] = '\0';
@@ -176,19 +152,18 @@ int socket_in_out(int i){
             }
             str1[0]=player[4];
             str1[1]=player[5];
+            str1[2]=player[6];
             str2[0]=player[7];
             if(player[8]!='\0'){
             str2[1]=player[8];
-            //d = atoi(str4);
             }
             else{player[8]=' ';}
             player[y++] = '\0';
 
             int a = atoi(str1);
             int b = atoi(str2);
-            //int e = concat(a,b);
 
-            if(a>=85){
+            if(a>=180){
             count++;
             //store array
             //hb_array[e][i];
@@ -203,9 +178,6 @@ int socket_in_out(int i){
             if(count>5){
             send(coach, player, strlen(player), 0 );
             }
-
-            //int c = atoi(str3);
-            //int f = concat(c,d);
 
             if(b>=12){
             //alert
