@@ -147,19 +147,13 @@ void coach_tell(int sockfd)
 int func(int socket)           //send requests for data periodically
 {
     char buff[MAX];
-    for(int x=0;x<2;x++){
         bzero(buff, sizeof(buff));
         read(socket, buff, sizeof(buff));
-        printf("From Pi : %s\n", buff);
-
-        bzero(buff, sizeof(buff));
-        read(socket, buff, sizeof(buff));
-        printf(" Player number: %s ", buff);
+        printf("From Pi: %s\n", buff);
 
         if ((strncmp(buff, "exit", 4)) == 0) {
             return 1;
         }
-    }
     return 0;
 }
 
@@ -204,31 +198,32 @@ int main()
     while (exit == 0){
 
         switch(soc){
-            case 1: exit1 = func(socket1);
-                    if(exit1 == 1){
+            case 1: if(exit1 !=1)exit1 = func(socket1);
+                    else if(exit1 == 1){
                         printf("Closing socket 1\n");
                         close(socket1);
                     }
                 break;
-            case 2: exit2 = func(socket2);
-                    if(exit2 == 1){
+            case 2: if(exit2 !=1)exit2 = func(socket2);
+                    else if(exit2 == 1){
                         printf("Closing socket 1\n");
                         close(socket2);
                     }
 
                 break;
-            case 3: exit3 = func(socket3);
-                    if(exit3 == 1){
+            case 3: if(exit3 !=1)exit3 = func(socket3);
+                    else if(exit3 == 1){
                         printf("Closing socket 1\n");
                         close(socket3);
                     }
 
                 break;
-            case 4: exit4 = func(socket4);
-                    if(exit4 == 1){
+            case 4: if(exit4 !=1)exit4 = func(socket4);
+                    else if(exit4 == 1){
                         printf("Closing socket 1\n");
                         close(socket4);
                     }
+                    printf("\n\n");
                     soc = 0;
                 break;
         }

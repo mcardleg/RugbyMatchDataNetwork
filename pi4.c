@@ -22,7 +22,7 @@ int master_socket, addrlen, new_socket, client_socket[7], max_clients, clients, 
 int max_sd;
 struct sockaddr_in address;
 char buffer[1025];  //data buffer of 1K
-char player[10];
+char player[30];
 fd_set readfds;     //set of socket descriptors
 
 void delay(int seconds)
@@ -107,6 +107,7 @@ int socket_in_out(int i){
             printf("Client Exit...\n");
             buffer[valread] = '\0';
             send(sd , buffer , strlen(buffer) , 0 );
+            send(coach, buffer, strlen(buffer), 0);
         }
         //Check if the socket is a player
         else if(strcmp(buffer, "player") == 0)
@@ -125,13 +126,20 @@ int socket_in_out(int i){
         //Check if it's a message from a player
         else if(player_check[i] == 1)
         {
+            int x =0;
+            int y =4;
             sprintf(player, "%d", i+18);		//DIFFERENT FOR EACH PI
-            player[1] = ':';
-            player[2] = ' ';
-            player[3] = '\0';
+            player[2] = ':';
+            player[3] = ' ';
+            buffer[valread] = '\0';
+            while(buffer[x]!='\0'){
+                player[y]=buffer[x];
+                x++;
+                y++;
+            }
+            player[y++] = '\0';
             send(coach, player, strlen(player), 0 );
-            buffer[valread] = '\0';                 //null terminate
-            send(coach, buffer, strlen(buffer), 0 );
+            //send(coach, buffer, strlen(buffer), 0 );
             strcpy(buffer, "forwarded\0");
             send(sd, buffer, strlen(buffer), 0 );
         }
