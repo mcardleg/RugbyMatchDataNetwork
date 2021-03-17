@@ -18,8 +18,9 @@
 
 //globals
 int count =0;
-//int hb_array[1000][5];
-//int impact_array[1000][5];
+int hb_array[1000][5];
+int impact_array[1000][5];
+int count0, count1, count2, count3, count4, count5;
 int opt;
 int master_socket, addrlen, new_socket, client_socket[7], max_clients, clients, player_check[7], activity, i, valread, sd, coach;
 int max_sd;
@@ -35,12 +36,41 @@ void delay(int seconds)
 
     while (clock() < start_time + milli_seconds);
 }
+void storage(int i, int hr, int impact){
+    switch(i-1) {
+        case 0: hb_array[count0][i];
+            impact_array[count0][i];
+            count0++;
+            break;
+        case 1: hb_array[count1][i];
+            impact_array[count1][i];
+            count1++;
+            break;
+        case 2: hb_array[count2][i];
+            impact_array[count2][i];
+            count2++;
+            break;
+        case 3: hb_array[count3][i];
+            impact_array[count3][i];
+            count3++;
+            break;
+        case 4: hb_array[count4][i];
+            impact_array[count4][i];
+            count4++;
+            break;
+        case 5: hb_array[count5][i];
+            impact_array[count5][i];
+            count5++;
+            break;
+    }
+}
 
 
 int setup(){
     opt = TRUE;
     max_clients = 7;
     clients = 0;
+    count0 = 0, count1 = 0, count2 = 0, count3 = 0, count4 = 0, count5 = 0;
 
     for (i = 0; i < max_clients; i++)
     {
@@ -135,7 +165,6 @@ int socket_in_out(int i){
             int x =0;
             int y =4;
             sprintf(player, "%d", i+18);		//DIFFERENT FOR EACH PI
-            //if(player[1]==1)player[1]=' ';
             player[2] = ':';
             player[3] = ' ';
             buffer[valread] = '\0';
@@ -159,14 +188,9 @@ int socket_in_out(int i){
 
             if(a>=180){
             count++;
-            //store array
-            //hb_array[e][i];
-
             }
             else{
             count=0;
-            //hb_array[e][i];
-            //store array
             }
 
             if(count>5){
@@ -174,16 +198,12 @@ int socket_in_out(int i){
             }
 
             if(b>=12){
-            //alert
             send(coach, player, strlen(player), 0 );
-            //impact_array[f][i];
             }
-            else{
-            //store array
-            //impact_array[f][i];
-            }
+
             strcpy(buffer, "forwarded\0");
             send(sd, buffer, strlen(buffer), 0 );
+            storage(i, a, b);
         }
         //If it's not a player, its a coach requesting data.
         else
